@@ -429,5 +429,5 @@ Enemy.prototype.update = function (dt) {
  */
 var CANVAS_WIDTH = 505;
 var CANVAS_HEIGHT = 600;
-var INITIAL_DIFFICULTY = 30;
+var INITIAL_DIFFICULTY = 1;
 var level = new Scene(CANVAS_WIDTH, CANVAS_HEIGHT, INITIAL_DIFFICULTY);
