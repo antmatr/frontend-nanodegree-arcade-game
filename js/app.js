@@ -1,3 +1,5 @@
+'use strict';
+
 /* Set of arrays used as render 'layers'
  * and as memory containers for classes instances 
  * so they could be easily purged by setting equal to []
@@ -78,8 +80,8 @@ Scene.prototype.composeLevel = function () {
     this.grassRowStart = this.stoneRowStart + this.stoneRowsNumber;
 
     // Create Background instances for current scene parameters
-    for (var rowIndex = 0; rowIndex < this.verticalBlocksNumber; rowIndex++) {
-        for (var colIndex = 0; colIndex < this.horizontalBlocksNumber; colIndex++) {
+    for (var rowIndex = 0, verticalBlocksNumber = this.verticalBlocksNumber; rowIndex < verticalBlocksNumber; rowIndex++) {
+        for (var colIndex = 0, horizontalBlocksNumber = this.horizontalBlocksNumber; colIndex < horizontalBlocksNumber; colIndex++) {
             if (rowIndex < this.stoneRowStart) {
                 new Background(colIndex * this.BLOCK_WIDTH, rowIndex * this.BLOCK_HEIGHT, 'images/water-block.png');
             } else if (rowIndex < this.grassRowStart) {
@@ -103,7 +105,7 @@ Scene.prototype.selectPlayer = function () {
         'images/char-pink-girl.png',
         'images/char-princess-girl.png'
     ];
-    for (var i = 0; i < players.length; i++) {
+    for (var i = 0, length = players.length; i < length; i++) {
         playerLayer.push(new Sprite(i * this.w / 5 + this.w / 10 - this.BLOCK_WIDTH / 2, this.grassRowStart * this.BLOCK_HEIGHT - 10, players[i]));
         textLayer.push(new TextSprite(i * this.w / 5 + this.w / 10, (this.grassRowStart + 1) * this.BLOCK_HEIGHT + 80, i + 1, 40, 'center'));
     }
@@ -161,7 +163,7 @@ Scene.prototype.summonEnemies = function () {
      */
 
     enemiesLayer = [];
-    for (var i = 0; i < this.stoneRowsNumber; i++) {
+    for (var i = 0, stoneRowsNumber = this.stoneRowsNumber; i < stoneRowsNumber; i++) {
         new Enemy(
             this.BLOCK_WIDTH * Math.round(Math.random() * (Math.floor(this.horizontalBlocksNumber + 2) / 2) - 1),
             (this.stoneRowStart + i) * this.BLOCK_HEIGHT - 20,
@@ -383,7 +385,7 @@ var Health = function (x, y, sprite, player) {
 Health.prototype = Object.create(Sprite.prototype);
 Health.prototype.constructor = Health;
 Health.prototype.render = function () {
-    for (var i = 0; i < this.player.health; i++) {
+    for (var i = 0, health = this.player.health; i < health; i++) {
         ctx.scale(1 / 3, 1 / 3);
         ctx.drawImage(Resources.get(this.sprite), this.x * 3 + i * this.player.scene.BLOCK_WIDTH - this.player.scene.BLOCK_WIDTH * this.player.health / 2, this.y);
         ctx.scale(3, 3);
